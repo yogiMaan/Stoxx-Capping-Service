@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "stoxx-capping-service"
+version = "0.1.0"
+description = ""
+authors = ["yogiMaan <133136369+yogiMaan@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "stoxx_capping_service"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytest = "^7.3.1"
+grpcio = "^1.54.2"
+google = "^3.0.0"
+protobuf = "^4.23.2"
+grpcio-tools = "^1.54.2"
+asyncio = "^3.4.3"
+pytest-grpc = "^0.8.0"
+pandas = "^2.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

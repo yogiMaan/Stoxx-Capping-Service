@@ -1,1 +1,0 @@
-# Stoxx-Capping-Service
