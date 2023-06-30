@@ -34,25 +34,25 @@ def test_basic_capping(grpc_stub):
     ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.1)],
                                                            notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))  # basic
     data = [
-                                    {'mcap': 0.12, 'components': ['1']},
-                                    {'mcap': 0.11, 'components': ['2']},
-                                    {'mcap': 0.1, 'components': ['3']},
-                                    {'mcap': 0.09, 'components': ['4']},
-                                    {'mcap': 0.07, 'components': ['5']},
-                                    {'mcap': 0.05, 'components': ['6']},
-                                    {'mcap': 0.05, 'components': ['7']},
-                                    {'mcap': 0.05, 'components': ['8']},
-                                    {'mcap': 0.05, 'components': ['9']},
-                                    {'mcap': 0.04, 'components': ['10']},
-                                    {'mcap': 0.04, 'components': ['11']},
-                                    {'mcap': 0.04, 'components': ['12']},
-                                    {'mcap': 0.04, 'components': ['13']},
-                                    {'mcap': 0.03, 'components': ['14']},
-                                    {'mcap': 0.03, 'components': ['15']},
-                                    {'mcap': 0.03, 'components': ['16']},
-                                    {'mcap': 0.03, 'components': ['17']},
-                                    {'mcap': 0.03, 'components': ['18']}
-                                    ]
+        {'mcap': 0.12, 'components': ['1']},
+        {'mcap': 0.11, 'components': ['2']},
+        {'mcap': 0.1, 'components': ['3']},
+        {'mcap': 0.09, 'components': ['4']},
+        {'mcap': 0.07, 'components': ['5']},
+        {'mcap': 0.05, 'components': ['6']},
+        {'mcap': 0.05, 'components': ['7']},
+        {'mcap': 0.05, 'components': ['8']},
+        {'mcap': 0.05, 'components': ['9']},
+        {'mcap': 0.04, 'components': ['10']},
+        {'mcap': 0.04, 'components': ['11']},
+        {'mcap': 0.04, 'components': ['12']},
+        {'mcap': 0.04, 'components': ['13']},
+        {'mcap': 0.03, 'components': ['14']},
+        {'mcap': 0.03, 'components': ['15']},
+        {'mcap': 0.03, 'components': ['16']},
+        {'mcap': 0.03, 'components': ['17']},
+        {'mcap': 0.03, 'components': ['18']}
+    ]
     # Create a DataFrame using pandas
     df = pd.DataFrame(data)
 
@@ -63,9 +63,10 @@ def test_basic_capping(grpc_stub):
     ci.mcaps.extend([Mcap(mcap=row['mcap'], components=row['components']) for row in mcaps])
 
     cpResult = grpc_stub.Cap(ci)
-    print(cpResult)
-    for row in list(cpResult):
-        print(row)
-    print(type(cpResult))
+    Expected = [0.833333333333333, 0.909090909090909, 1.0, 1.044776119402985, 1.044776119402985, 1.044776119402985,
+                1.044776119402985, 1.044776119402985, 1.044776119402985, 1.044776119402985, 1.044776119402985,
+                1.044776119402985, 1.044776119402985, 1.044776119402985, 1.044776119402985, 1.044776119402985,
+                1.044776119402985, 1.044776119402985]
+    Result = cpResult.CappingFactor
 
-    assert 1==2
+    assert Expected == Result

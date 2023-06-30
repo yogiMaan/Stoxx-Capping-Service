@@ -3,5 +3,8 @@
         "stoxx_capping_test"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": [
+        "./stoxx_capping_service"
+    ]
 }

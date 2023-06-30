@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "CappingProto";
+option objc_class_prefix = "CAP";
+
+package capping;
+
+// Interface exported by the server.
+
+service Capping {
+	rpc Cap(CapInput) returns (CapResult) {}
+}
+
+message Mcap {	
+	double mcap = 1;
+	repeated string components = 2;  // The grouping components
+}
+
+enum NotEnoughComponentsBehaviour {
+	NotEnoughComponentsBehaviour_Error = 0;
+	NotEnoughComponentsBehaviour_OneOverN = 1;
+	NotEnoughComponentsBehaviour_NotApplicable = 2;
+}
+
+enum Methodology {
+	Methodology_Fixed = 0;
+	Methodology_Multi = 1;
+	Methodology_Ladder = 2;
+	Methodology_Regulatory = 3;  //Not implemented
+	Methodology_Exposure = 4;  	 //Not implemented
+	Methodology_CapFloor = 5;	 //Not implemented
+}
+
+message LimitInfo {		
+	double limit = 1;
+	optional string limitName = 2;
+}
+
+
+message MethodologyData {	
+	repeated LimitInfo limitInfos = 1;
+	optional int32 applyLimitToNthLargestAndBelow = 2;		//Used by Methodology_Ladder
+	NotEnoughComponentsBehaviour notEnoughComponentsBehaviour = 3;
+}
+
+message CapInput {
+	Methodology methodology = 1;
+	repeated MethodologyData methodologyDatas = 2;	
+	repeated Mcap mcaps = 3;
+	bool mcapDecreasingFactors = 4;
+}
+
+message CapResult {
+	repeated double CappingFactor = 1;
+}
+
