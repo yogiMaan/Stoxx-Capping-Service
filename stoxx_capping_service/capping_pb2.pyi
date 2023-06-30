@@ -28,10 +28,17 @@ class CapInput(_message.Message):
     def __init__(self, methodology: _Optional[_Union[Methodology, str]] = ..., methodologyDatas: _Optional[_Iterable[_Union[MethodologyData, _Mapping]]] = ..., mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcapDecreasingFactors: bool = ...) -> None: ...
 
 class CapResult(_message.Message):
-    __slots__ = ["CappingFactor"]
-    CAPPINGFACTOR_FIELD_NUMBER: _ClassVar[int]
-    CappingFactor: _containers.RepeatedScalarFieldContainer[float]
-    def __init__(self, CappingFactor: _Optional[_Iterable[float]] = ...) -> None: ...
+    __slots__ = ["capfactors"]
+    class CapfactorsEntry(_message.Message):
+        __slots__ = ["key", "value"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: float
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[float] = ...) -> None: ...
+    CAPFACTORS_FIELD_NUMBER: _ClassVar[int]
+    capfactors: _containers.ScalarMap[str, float]
+    def __init__(self, capfactors: _Optional[_Mapping[str, float]] = ...) -> None: ...
 
 class LimitInfo(_message.Message):
     __slots__ = ["limit", "limitName"]
@@ -42,12 +49,14 @@ class LimitInfo(_message.Message):
     def __init__(self, limit: _Optional[float] = ..., limitName: _Optional[str] = ...) -> None: ...
 
 class Mcap(_message.Message):
-    __slots__ = ["components", "mcap"]
+    __slots__ = ["ConstituentId", "components", "mcap"]
     COMPONENTS_FIELD_NUMBER: _ClassVar[int]
+    CONSTITUENTID_FIELD_NUMBER: _ClassVar[int]
+    ConstituentId: str
     MCAP_FIELD_NUMBER: _ClassVar[int]
     components: _containers.RepeatedScalarFieldContainer[str]
     mcap: float
-    def __init__(self, mcap: _Optional[float] = ..., components: _Optional[_Iterable[str]] = ...) -> None: ...
+    def __init__(self, mcap: _Optional[float] = ..., components: _Optional[_Iterable[str]] = ..., ConstituentId: _Optional[str] = ...) -> None: ...
 
 class MethodologyData(_message.Message):
     __slots__ = ["applyLimitToNthLargestAndBelow", "limitInfos", "notEnoughComponentsBehaviour"]

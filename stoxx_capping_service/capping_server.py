@@ -6,8 +6,8 @@ import copy
 import logging
 import grpc
 
-from capping_pb2 import Methodology, MethodologyData, CapInput, CapResult, Methodology_Ladder
-from capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
+from capping_pb2 import CapResult, Methodology_Ladder
+from stoxx_capping_service.capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
 
 
 class CappingServicer(CappingServicer):
@@ -48,7 +48,7 @@ class CappingServicer(CappingServicer):
                                                       underweightPct=underweightPct, spreadResidual=spreadResidual,
                                                       weightPlusResidual=weightPlusResidual)
 
-        return componentWghts;
+        return componentWghts
 
     @staticmethod
     def __after_nth_largest_components(self, componentPcts, n):
@@ -114,8 +114,8 @@ class CappingServicer(CappingServicer):
     def __further_iterations_required(componentWghts, limit, excludes):
         for key in componentWghts:
             if key not in excludes and componentWghts[key].weightPlusResidual > limit:
-                return True;
-        return False;
+                return True
+        return False
 
     @staticmethod
     def __sumTruncatedWeightsUnderlimit(self, componentWghts, limit):
@@ -213,7 +213,10 @@ class CappingServicer(CappingServicer):
                 f = lstComponentWghts[iMd][key].weightPlusResidual / (lstComponentWghts[iMd][key].pctMcap)
                 factor *= f
                 iMd += 1
-            cpResults.CappingFactor.append(round(factor, 15))
+            """cpResults.CappingFactor.append(round(factor, 15))
+            cpResults.Id.append(key)
+            """
+            cpResults.capfactors.update({request.mcaps[i].ConstituentId: round(factor, 15)})
             i += 1
 
         if request.mcapDecreasingFactors:

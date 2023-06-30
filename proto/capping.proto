@@ -15,6 +15,7 @@ service Capping {
 message Mcap {	
 	double mcap = 1;
 	repeated string components = 2;  // The grouping components
+	string ConstituentId = 3;
 }
 
 enum NotEnoughComponentsBehaviour {
@@ -50,8 +51,8 @@ message CapInput {
 	repeated Mcap mcaps = 3;
 	bool mcapDecreasingFactors = 4;
 }
-
 message CapResult {
-	repeated double CappingFactor = 1;
+    map<string,double> capfactors =1;
 }
+
 

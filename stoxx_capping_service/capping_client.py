@@ -5,9 +5,10 @@ from __future__ import print_function
 import logging
 import grpc
 import capping_pb2
-import capping_pb2_grpc
+from stoxx_capping_service import capping_pb2_grpc
 
-def cap(stub):   
+
+def cap(stub):
     #https://protobuf.dev/reference/python/python-generated/#repeated-fields 
     
     ci = capping_pb2.CapInput()    
