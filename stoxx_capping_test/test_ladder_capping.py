@@ -1,13 +1,5 @@
-from decimal import Context
-from operator import concat
-from grpc import ServicerContext, StatusCode
 import pytest
-import stoxx_capping_service
 from stoxx_capping_service import capping_pb2
-from stoxx_capping_service.capping_pb2 import *
-from stoxx_capping_service.capping_pb2_grpc import CappingStub
-import pandas as pd
-
 
 @pytest.fixture(scope='module')
 def grpc_add_to_server():
@@ -28,46 +20,48 @@ def grpc_stub_cls(grpc_channel):
 
 
 def test_equal_capping(grpc_stub):
-    ci = capping_pb2.CapInput()    
+    ci = capping_pb2.CapInput()
 
     ci.methodology = capping_pb2.Methodology_Ladder
-    ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos= [capping_pb2.LimitInfo(limit=0.1)], applyLimitToNthLargestAndBelow=1, notEnoughComponentsBehaviour= capping_pb2.NotEnoughComponentsBehaviour_Error))
-    ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos= [capping_pb2.LimitInfo(limit=0.09)], applyLimitToNthLargestAndBelow=2, notEnoughComponentsBehaviour= capping_pb2.NotEnoughComponentsBehaviour_Error))
-    ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos= [capping_pb2.LimitInfo(limit=0.08)], applyLimitToNthLargestAndBelow=3, notEnoughComponentsBehaviour= capping_pb2.NotEnoughComponentsBehaviour_Error))
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.1)], applyLimitToNthLargestAndBelow=1,
+                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.09)], applyLimitToNthLargestAndBelow=2,
+                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.08)], applyLimitToNthLargestAndBelow=3,
+                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
 
+    ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=10.0, components=['3'], ConstituentId="3"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=9.0, components=['4'], ConstituentId="4"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=7.0, components=['5'], ConstituentId="5"))
 
-    data = [
-        
-                                    {'mcap': 12.0, 'components': ['1']},
-                                    {'mcap': 11.0, 'components': ['2']},
-                                    {'mcap': 10.0, 'components': ['3']},
-                                    {'mcap': 9.0, 'components': ['4']},
-                                    {'mcap': 7.0, 'components': ['5']},
-                                    {'mcap': 5.0, 'components': ['6']},
-                                    {'mcap': 5.0, 'components': ['7']},
-                                    {'mcap': 5.0, 'components': ['8']},
-                                    {'mcap': 5.0, 'components': ['9']},
-                                    {'mcap': 4.0, 'components': ['10']},
-                                    {'mcap': 4.0, 'components': ['11']},
-                                    {'mcap': 4.0, 'components': ['12']},
-                                    {'mcap': 4.0, 'components': ['13']},
-                                    {'mcap': 3.0, 'components': ['14']},
-                                    {'mcap': 3.0, 'components': ['15']},
-                                    {'mcap': 3.0, 'components': ['16']},
-                                    {'mcap': 3.0, 'components': ['17']},
-                                    {'mcap': 3.0, 'components': ['18']}
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['6'], ConstituentId="6"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['7'], ConstituentId="7"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['8'], ConstituentId="8"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['9'], ConstituentId="9"))
 
-                                    ]
-    # Create a DataFrame using pandas
-    df = pd.DataFrame(data)
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['10'], ConstituentId="10"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['11'], ConstituentId="11"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['12'], ConstituentId="12"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['13'], ConstituentId="13"))
 
-    # Convert the DataFrame to a list of dictionaries
-    mcaps = df.to_dict('records')
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['14'], ConstituentId="14"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['15'], ConstituentId="15"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['16'], ConstituentId="16"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['17'], ConstituentId="17"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['18'], ConstituentId="18"))
 
     # Append the mcaps to the CapInput object
-    ci.mcaps.extend([Mcap(mcap=row['mcap'], components=row['components']) for row in mcaps])
-    cpResult = grpc_stub.Cap(ci)    
-    print ("got results")
-    print(cpResult)
+    cpResult = grpc_stub.Cap(ci)
+    for Id in cpResult.capfactors:
+        print(Id, cpResult.capfactors[Id])
+    Result = cpResult.capfactors
+    print(Result)
+    Expected = {'18': 1.120689655172414, '15': 1.120689655172414, '16': 1.120689655172414, '6': 1.120689655172413, '5': 1.120689655172413, '10': 1.120689655172413, '17': 1.120689655172414, '11': 1.120689655172413, '13': 1.120689655172413, '7': 1.120689655172413, '9': 1.120689655172413, '1': 0.833333333333333, '2': 0.818181818181818, '14': 1.120689655172414, '12': 1.120689655172413, '4': 0.888888888888889, '3': 0.8, '8': 1.120689655172413
+                }
 
-    #assert 1==2
+    assert Expected == Result

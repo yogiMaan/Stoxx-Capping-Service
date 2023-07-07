@@ -1,11 +1,10 @@
-from decimal import Context
-from operator import concat
-from grpc import ServicerContext, StatusCode
 import pytest
-import stoxx_capping_service
 from stoxx_capping_service import capping_pb2
-from stoxx_capping_service.capping_pb2 import *
-import pandas as pd
+import os
+import logging
+
+DEFAULT_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - line %(lineno)s - %(message)s"
+logging.basicConfig(level=os.environ.get("LOG_LEVEL", "DEBUG"), format=os.environ.get("LOG_FORMAT", DEFAULT_FORMAT))
 
 
 @pytest.fixture(scope='module')
@@ -64,5 +63,4 @@ def test_basic_capping(grpc_stub):
                 '13': 1.044776119402985, '7': 1.044776119402985, '9': 1.044776119402985, '1': 0.833333333333333,
                 '2': 0.909090909090909, '14': 1.044776119402985, '12': 1.044776119402985, '4': 1.044776119402985,
                 '3': 1.0, '8': 1.044776119402985}
-    type(Expected)
     assert Expected == Result

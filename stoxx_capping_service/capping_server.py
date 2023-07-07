@@ -5,10 +5,13 @@ from concurrent import futures
 import copy
 import logging
 import grpc
-
 from capping_pb2 import CapResult, Methodology_Ladder
 from stoxx_capping_service.capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
+import os
 
+DEFAULT_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - line %(lineno)s - %(message)s"
+logging.basicConfig(level=os.environ.get("LOG_LEVEL", "DEBUG"), format=os.environ.get("LOG_FORMAT", DEFAULT_FORMAT))
+logger = logging.getLogger(__name__)
 
 class CappingServicer(CappingServicer):
     """Provides methods that implement functionality of capping server."""
@@ -47,7 +50,7 @@ class CappingServicer(CappingServicer):
                                                       residual=0, truncatedWeight=componentPcts[key],
                                                       underweightPct=underweightPct, spreadResidual=spreadResidual,
                                                       weightPlusResidual=weightPlusResidual)
-
+        logger.info("__cap_component: componentWghts: %s", componentWghts)
         return componentWghts
 
     @staticmethod
@@ -60,6 +63,7 @@ class CappingServicer(CappingServicer):
         while (i < (n - 1) and i < len(componentPctsSortedDesc)):
             excludes.add(componentPctsSortedDesc[i][0])  # just get the key, not the key/value pair
             i += 1
+        logger.info("__after_nth_largest_components: excludes: %s", excludes)
         return excludes
 
     @staticmethod
@@ -79,7 +83,7 @@ class CappingServicer(CappingServicer):
                 componentPcts[key] += pctMcap
             else:
                 componentPcts[key] = mcap.mcap / sumMcaps
-
+        logger.info("__mcaps_to_component_pcts: componentPcts: %s", componentPcts)
         return componentPcts
 
     @staticmethod
@@ -93,7 +97,7 @@ class CappingServicer(CappingServicer):
                 componentPcts[key] += weightsPlusResiduals[prevKey]
             else:
                 componentPcts[key] = weightsPlusResiduals[prevKey]
-
+        logger.info("__mcaps_pcts_to_pcts_next_component: componentPcts: %s", componentPcts)
         return componentPcts
 
     @staticmethod
@@ -107,14 +111,17 @@ class CappingServicer(CappingServicer):
         while i < len(cpResults.CappingFactor):
             cpResults.CappingFactor[i] = round(cpResults.CappingFactor[i] / maxF, 15)
             i += 1
-
+        logger.info("__convert_to_mcap_decreasing :CappingFactor: %s", cpResults.CappingFactor)
         return cpResults
 
     @staticmethod
     def __further_iterations_required(componentWghts, limit, excludes):
         for key in componentWghts:
             if key not in excludes and componentWghts[key].weightPlusResidual > limit:
+                logger.info("Further iterations required")
                 return True
+
+        logger.info("__further_iterations_required: No further iterations required")
         return False
 
     @staticmethod
@@ -123,6 +130,7 @@ class CappingServicer(CappingServicer):
         for key in componentWghts:
             if componentWghts[key].truncatedWeight < limit:
                 sum += componentWghts[key].truncatedWeight
+        logger.info("__sumTruncatedWeightsUnderlimit: sumTruncatedWeightsUnderlimit: %s", sum)
         return sum
 
     @staticmethod
@@ -172,9 +180,11 @@ class CappingServicer(CappingServicer):
             for key in componentWghts:
                 componentWghts[key] = componentWghts[key]._replace(pctMcap=originalComponentPcts[key])
 
+        logger.info("__cap_nth_level :componentWghts: %s", componentWghts)
         return componentWghts;
 
     def Cap(self, request, context):
+        logger.info("Cap called")
         # print("methodology is: " + Methodology.Name(request.methodology))
         lstComponentWghts = []
 
@@ -182,7 +192,7 @@ class CappingServicer(CappingServicer):
 
         componentIndex = 0
         for md in request.methodologyDatas:
-            if (len(md.limitInfos) == 0):
+            if len(md.limitInfos) == 0:
                 limit = 0
             else:
                 limitInfo = md.limitInfos[0]
@@ -210,7 +220,7 @@ class CappingServicer(CappingServicer):
             while iMd < len(request.methodologyDatas):
                 iComponentIndex = 0 if request.methodology == Methodology_Ladder else iMd
                 key = request.mcaps[i].components[iComponentIndex]
-                f = lstComponentWghts[iMd][key].weightPlusResidual / (lstComponentWghts[iMd][key].pctMcap)
+                f = lstComponentWghts[iMd][key].weightPlusResidual / lstComponentWghts[iMd][key].pctMcap
                 factor *= f
                 iMd += 1
             """cpResults.CappingFactor.append(round(factor, 15))
@@ -235,5 +245,5 @@ def serve():
 
 
 if __name__ == '__main__':
-    logging.basicConfig()
+    logger = logging.getLogger(__name__)
     serve()
