@@ -16,16 +16,18 @@ NotEnoughComponentsBehaviour_NotApplicable: NotEnoughComponentsBehaviour
 NotEnoughComponentsBehaviour_OneOverN: NotEnoughComponentsBehaviour
 
 class CapInput(_message.Message):
-    __slots__ = ["mcapDecreasingFactors", "mcaps", "methodology", "methodologyDatas"]
+    __slots__ = ["mcapDecreasingFactors", "mcaps", "methodology", "methodologyDatas", "parentMcaps"]
     MCAPDECREASINGFACTORS_FIELD_NUMBER: _ClassVar[int]
     MCAPS_FIELD_NUMBER: _ClassVar[int]
     METHODOLOGYDATAS_FIELD_NUMBER: _ClassVar[int]
     METHODOLOGY_FIELD_NUMBER: _ClassVar[int]
+    PARENTMCAPS_FIELD_NUMBER: _ClassVar[int]
     mcapDecreasingFactors: bool
     mcaps: _containers.RepeatedCompositeFieldContainer[Mcap]
     methodology: Methodology
     methodologyDatas: _containers.RepeatedCompositeFieldContainer[MethodologyData]
-    def __init__(self, methodology: _Optional[_Union[Methodology, str]] = ..., methodologyDatas: _Optional[_Iterable[_Union[MethodologyData, _Mapping]]] = ..., mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcapDecreasingFactors: bool = ...) -> None: ...
+    parentMcaps: _containers.RepeatedCompositeFieldContainer[Mcap]
+    def __init__(self, methodology: _Optional[_Union[Methodology, str]] = ..., methodologyDatas: _Optional[_Iterable[_Union[MethodologyData, _Mapping]]] = ..., mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., parentMcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcapDecreasingFactors: bool = ...) -> None: ...
 
 class CapResult(_message.Message):
     __slots__ = ["capfactors"]

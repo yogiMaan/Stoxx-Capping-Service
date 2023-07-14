@@ -17,51 +17,27 @@ def cap(stub):
     
     ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos= [capping_pb2.LimitInfo(limit=0.1)], notEnoughComponentsBehaviour= capping_pb2.NotEnoughComponentsBehaviour_Error)) #basic    
 
-    # ci.mcapDecreasingFactors = True
+    ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=10.0, components=['3'], ConstituentId="3"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=9.0, components=['4'], ConstituentId="4"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=7.0, components=['5'], ConstituentId="5"))
 
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components= ['1']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components= ['2']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=10.0, components= ['3']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=9.0, components= ['4']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=7.0, components= ['5']))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['6'], ConstituentId="6"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['7'], ConstituentId="7"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['8'], ConstituentId="8"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components=['9'], ConstituentId="9"))
 
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components= ['6']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components= ['7']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components= ['8']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components= ['9']))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['10'], ConstituentId="10"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['11'], ConstituentId="11"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['12'], ConstituentId="12"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components=['13'], ConstituentId="13"))
 
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components= ['10']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components= ['11']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components= ['12']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=4.0, components= ['13']))
-
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components= ['14']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components= ['15']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components= ['16']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components= ['17']))
-    # ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components= ['18']))
-
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.12, components= ['1']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.11, components= ['2']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.1, components= ['3']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.09, components= ['4']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.07, components= ['5']))
-
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.05, components= ['6']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.05, components= ['7']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.05, components= ['8']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.05, components= ['9']))
-
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.04, components= ['10']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.04, components= ['11']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.04, components= ['12']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.04, components= ['13']))
-
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.03, components= ['14']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.03, components= ['15']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.03, components= ['16']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.03, components= ['17']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=0.03, components= ['18']))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['14'], ConstituentId="14"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['15'], ConstituentId="15"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['16'], ConstituentId="16"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['17'], ConstituentId="17"))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['18'], ConstituentId="18"))
 
     cpResult = stub.Cap(ci)    
     print ("got results")

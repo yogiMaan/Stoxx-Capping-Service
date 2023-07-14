@@ -49,6 +49,7 @@ message CapInput {
 	Methodology methodology = 1;
 	repeated MethodologyData methodologyDatas = 2;	
 	repeated Mcap mcaps = 3;
+	repeated Mcap parentMcaps = 5;
 	bool mcapDecreasingFactors = 4;
 }
 message CapResult {

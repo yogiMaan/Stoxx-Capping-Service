@@ -7,15 +7,15 @@ readme = "README.md"
 packages = [{include = "stoxx_capping_service"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-pytest = "^7.3.1"
-grpcio = "^1.54.2"
-google = "^3.0.0"
-protobuf = "^4.23.2"
-grpcio-tools = "^1.54.2"
-asyncio = "^3.4.3"
-pytest-grpc = "^0.8.0"
-pandas = "^2.0.2"
+python = "3.11.1"
+pytest = "7.3.1"
+grpcio = "1.54.2"
+google = "3.0.0"
+protobuf = "4.23.2"
+grpcio-tools = "1.54.2"
+asyncio = "3.4.3"
+pytest-grpc = "0.8.0"
+pandas = "2.0.2"
 
 
 [build-system]
