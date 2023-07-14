@@ -5,9 +5,10 @@ from __future__ import print_function
 import logging
 import grpc
 import capping_pb2
-import capping_pb2_grpc
+from stoxx_capping_service import capping_pb2_grpc
 
-def cap(stub):   
+
+def cap(stub):
     #https://protobuf.dev/reference/python/python-generated/#repeated-fields 
     
     ci = capping_pb2.CapInput()    
@@ -22,7 +23,7 @@ def cap(stub):
     ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components= ['1', 'a']))
     ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components= ['2', 'a']))
     ci.mcaps.append(capping_pb2.Mcap(mcap=10.0, components= ['3', 'a']))
-    ci.mcaps.append(capping_pb2.Mcap(mcap=9.0, components= ['4', 'a']))
+    ci.mcaps.append(capping_pb2.Mcap(mcap=9.0,  components= ['4', 'a']))
 
     ci.mcaps.append(capping_pb2.Mcap(mcap=7.0, components= ['5', 'b']))
     ci.mcaps.append(capping_pb2.Mcap(mcap=5.0, components= ['6', 'b']))
