@@ -3,14 +3,16 @@ import logging
 import os
 from concurrent import futures
 import grpc
-from capping_pb2 import CapResult, Methodology_Ladder
-from capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
 from capping_Core import __cap_nth_level as cap_nth, __mcaps_pcts_to_pcts_next_component as mcap_nxt_cmpt, \
     __convert_to_mcap_decreasing as mcap_decreasing
+from capping_pb2 import CapResult, Methodology_Ladder
+from capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
+import pandas as pd
 
 DEFAULT_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - line %(lineno)s - %(message)s"
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "DEBUG"), format=os.environ.get("LOG_FORMAT", DEFAULT_FORMAT))
 logger = logging.getLogger(__name__)
+
 
 class CappingServicer(CappingServicer):
     """Provides methods that implement functionality of capping server."""
@@ -19,6 +21,7 @@ class CappingServicer(CappingServicer):
     def __mcaps_to_component_pcts(mcaps, componentIndex):
         # Function to convert a list of MCaps to a dictionary of component percentages
         # The dictionary key is the component name and the value is the percentage
+        #df = pd.DataFrame(mcaps, columns=['components', 'mcap'])
         sumMcaps = 0.0
         for mcap in mcaps:
             sumMcaps += mcap.mcap
@@ -37,15 +40,14 @@ class CappingServicer(CappingServicer):
         logger.info("__mcaps_to_component_pcts: componentPcts: %s", componentPcts)
         return componentPcts
 
-
-
     def Cap(self, request, context):
 
         logger.info("Cap Function called")
-        #logger.info("methodology is: " + Methodology.Name(request.methodology))
+        # logger.info("methodology is: " + Methodology.Name(request.methodology))
         lstComponentWghts = []
 
-        componentPcts = self.__mcaps_to_component_pcts(mcaps=request.mcaps, componentIndex=0)
+        componentPcts = self.__mcaps_to_component_pcts(
+            mcaps=request.mcaps, componentIndex=0)
 
         componentIndex = 0
         for md in request.methodologyDatas:
@@ -56,16 +58,16 @@ class CappingServicer(CappingServicer):
                 limit = limitInfo.limit
                 # limitName = limitInfo.limitName
 
-            componentWghts = cap_nth( limit=limit, componentPcts=componentPcts,
-                                                  applyLimitToNthLargestAndBelow=md.applyLimitToNthLargestAndBelow)
+            componentWghts = cap_nth(limit=limit, componentPcts=componentPcts,
+                                     applyLimitToNthLargestAndBelow=md.applyLimitToNthLargestAndBelow)
             if (componentIndex + 1) < len(request.methodologyDatas):
                 for componentWght in componentWghts:
                     componentPcts[componentWght] = componentWghts[componentWght].weightPlusResidual
 
                 if request.methodology != Methodology_Ladder:
                     componentPcts = mcap_nxt_cmpt(mcaps=request.mcaps,
-                                                                             weightsPlusResiduals=componentPcts,
-                                                                             componentIndex=componentIndex + 1)
+                                                  weightsPlusResiduals=componentPcts,
+                                                  componentIndex=componentIndex + 1)
             lstComponentWghts.append(componentWghts)
             componentIndex += 1
 

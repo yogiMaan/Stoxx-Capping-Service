@@ -4,8 +4,10 @@ from collections import namedtuple
 import copy
 
 logger = logging.getLogger(__name__)
+
+
 def __after_nth_largest_components(componentPcts, n):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     excludes = set()
     if n <= 1:
         return excludes
@@ -21,7 +23,7 @@ def __after_nth_largest_components(componentPcts, n):
 
 def __cap_component(limit, componentPcts, excludes, isFirstIteration, origSumTruncatedWeightsUnderLimit,
                     origSumResiduals):
-    logger.info("Function %s:excludes: %s",sys._getframe().f_code.co_name, excludes)
+    logger.info("Function %s:excludes: %s", sys._getframe().f_code.co_name, excludes)
     # https://docs.python.org/3/library/collections.html#collections.namedtuple
     ComponentWeight = namedtuple('CappingRecord',
                                  'pctMcap, applyCap, residual, truncatedWeight, underweightPct, spreadResidual, weightPlusResidual')
@@ -57,7 +59,7 @@ def __cap_component(limit, componentPcts, excludes, isFirstIteration, origSumTru
 
 
 def __further_iterations_required(componentWghts, limit, excludes):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     for key in componentWghts:
         if key not in excludes and componentWghts[key].weightPlusResidual > limit:
             logger.info("Further iterations required")
@@ -67,7 +69,7 @@ def __further_iterations_required(componentWghts, limit, excludes):
 
 
 def __mcaps_pcts_to_pcts_next_component(mcaps, weightsPlusResiduals, componentIndex):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     componentPcts = {}
     for mcap in mcaps:
         prevKey = mcap.components[componentIndex - 1]
@@ -82,7 +84,7 @@ def __mcaps_pcts_to_pcts_next_component(mcaps, weightsPlusResiduals, componentIn
 
 
 def __convert_to_mcap_decreasing(cpResults):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     maxF = 0.0
     for f in cpResults.CappingFactor:
         if f > maxF:
@@ -98,7 +100,7 @@ def __convert_to_mcap_decreasing(cpResults):
 
 
 def __sumTruncatedWeightsUnderlimit(componentWghts, limit):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     sum = 0.0
     for key in componentWghts:
         if componentWghts[key].truncatedWeight < limit:
@@ -109,7 +111,7 @@ def __sumTruncatedWeightsUnderlimit(componentWghts, limit):
 
 
 def __cap_nth_level(limit, componentPcts, applyLimitToNthLargestAndBelow):
-    logger.info("Function %s: starting",sys._getframe().f_code.co_name)
+    logger.info("Function %s: starting", sys._getframe().f_code.co_name)
     isFirstIteration = True
     further_iterations_required = False
     sumTruncatedWeightsUnderLimit = 0.0
