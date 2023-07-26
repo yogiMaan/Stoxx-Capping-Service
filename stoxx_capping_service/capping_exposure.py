@@ -28,6 +28,7 @@ def cap_exposure(df_parent_mcaps: pd.DataFrame, df_mcaps: pd.DataFrame):
 
     has_missing_component = df_final["factor"].isna().any()
     if not has_missing_component:
+        df_final = df_final.merge(df_mcaps, on="c1", how="inner")
         return df_final
 
     df_final["child_pct_capped_mcaps"] = df_final.apply(
@@ -53,5 +54,5 @@ def cap_exposure(df_parent_mcaps: pd.DataFrame, df_mcaps: pd.DataFrame):
         lambda x: x["new_child_tw"] / x["pct_child"],
         axis=1,
     )
-
+    df_final = df_final.merge(df_mcaps, on="c1", how="inner")
     return df_final

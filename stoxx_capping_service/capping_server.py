@@ -112,7 +112,7 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
         return df_final
 
     def __multiply_factors(self, num_components: int, df_row: pd.Series):
-        factor = df_row["c1_factor"]
+        factor = df_row["c1_factor"] if "c1_factor" in df_row else df_row["factor"]
 
         if num_components == 1:
             return factor
