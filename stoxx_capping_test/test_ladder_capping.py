@@ -22,16 +22,17 @@ def grpc_stub_cls(grpc_channel):
 def test_equal_capping(grpc_stub):
     ci = capping_pb2.CapInput()
 
-    ci.methodology = capping_pb2.Methodology_Ladder
     ci.methodologyDatas.append(
-        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.1)], applyLimitToNthLargestAndBelow=1,
-                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
-    ci.methodologyDatas.append(
-        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.09)], applyLimitToNthLargestAndBelow=2,
-                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
-    ci.methodologyDatas.append(
-        capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.08)], applyLimitToNthLargestAndBelow=3,
-                                    notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))
+        capping_pb2.MethodologyData(
+            methodology=capping_pb2.Methodology_Ladder,
+            limitInfos=[
+                capping_pb2.LimitInfo(limit=0.1),
+                capping_pb2.LimitInfo(limit=0.09),
+                capping_pb2.LimitInfo(limit=0.08),
+            ],
+            notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error,
+        )
+    )
 
     ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
@@ -57,11 +58,10 @@ def test_equal_capping(grpc_stub):
 
     # Append the mcaps to the CapInput object
     cpResult = grpc_stub.Cap(ci)
-    for Id in cpResult.capfactors:
-        print(Id, cpResult.capfactors[Id])
-    Result = cpResult.capfactors
-    print(Result)
-    Expected = {'18': 1.120689655172414, '15': 1.120689655172414, '16': 1.120689655172414, '6': 1.120689655172413, '5': 1.120689655172413, '10': 1.120689655172413, '17': 1.120689655172414, '11': 1.120689655172413, '13': 1.120689655172413, '7': 1.120689655172413, '9': 1.120689655172413, '1': 0.833333333333333, '2': 0.818181818181818, '14': 1.120689655172414, '12': 1.120689655172413, '4': 0.888888888888889, '3': 0.8, '8': 1.120689655172413
+    dict = {}
+    for i in cpResult.capfactors:
+        dict[i.ConstituentID] = i.factor
+    Expected = {'18': 1.120689655172414, '15': 1.120689655172414, '16': 1.120689655172414, '6': 1.120689655172415, '5': 1.120689655172414, '10': 1.120689655172414, '17': 1.120689655172414, '11': 1.120689655172414, '13': 1.120689655172414, '7': 1.120689655172415, '9': 1.120689655172415, '1': 0.833333333333333, '2': 0.818181818181818, '14': 1.120689655172414, '12': 1.120689655172414, '4': 0.888888888888889, '3': 0.8, '8': 1.120689655172415
                 }
 
-    assert Expected == Result
+    assert dict == Expected

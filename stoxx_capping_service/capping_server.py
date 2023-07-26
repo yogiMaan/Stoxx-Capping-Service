@@ -1,108 +1,157 @@
 """Python implementation of the index capping"""
-import logging
-import os
 from concurrent import futures
-import grpc
-from capping_Core import __cap_nth_level as cap_nth, __mcaps_pcts_to_pcts_next_component as mcap_nxt_cmpt, \
-    __convert_to_mcap_decreasing as mcap_decreasing
-from capping_pb2 import CapResult, Methodology_Ladder
-from capping_pb2_grpc import CappingServicer, add_CappingServicer_to_server
+import logging
 import pandas as pd
+import grpc
+import capping_pb2
+from stoxx_capping_service import capping_pb2_grpc
+import capping_Core as Core
+import capping_ladder as ladder
+import capping_exposure as exposure
 
-DEFAULT_FORMAT = "%(asctime)s - %(levelname)s - %(name)s - line %(lineno)s - %(message)s"
-logging.basicConfig(level=os.environ.get("LOG_LEVEL", "DEBUG"), format=os.environ.get("LOG_FORMAT", DEFAULT_FORMAT))
-logger = logging.getLogger(__name__)
 
-
-class CappingServicer(CappingServicer):
+class CappingServicer(capping_pb2_grpc.CappingServicer):
     """Provides methods that implement functionality of capping server."""
 
-    @staticmethod
-    def __mcaps_to_component_pcts(mcaps, componentIndex):
-        # Function to convert a list of MCaps to a dictionary of component percentages
-        # The dictionary key is the component name and the value is the percentage
-        #df = pd.DataFrame(mcaps, columns=['components', 'mcap'])
-        sumMcaps = 0.0
+    def __mcaps_to_data_frame(self, mcaps):
+        rows = list()
         for mcap in mcaps:
-            sumMcaps += mcap.mcap
+            d = {"mcap": mcap.mcap, "c1": mcap.components[0], "ConstituentId": mcap.ConstituentId}
 
-        # this line stops a testcase where sum = 1.0000000000000002 from failing
-        sumMcaps = round(sumMcaps, 15)
+            # if we are doing multi component capping, add the additional components
+            for i in range(1, len(mcap.components)):
+                d["c" + str(i + 1)] = mcap.components[i]
+            rows.append(d)
 
-        componentPcts = {}
-        for mcap in mcaps:
-            key = mcap.components[componentIndex]
-            if key in componentPcts:
-                pctMcap = mcap.mcap / sumMcaps
-                componentPcts[key] += pctMcap
+        return pd.DataFrame(rows)
+
+    def __cap(self, request):
+        df_mcaps = self.__mcaps_to_data_frame(mcaps=request.mcaps)
+
+        for i_component_index, methodology_data in enumerate(request.methodologyDatas):
+            print(
+                "methodology: "
+                + capping_pb2.Methodology.Name(methodology_data.methodology)
+            )
+            if methodology_data.methodology == capping_pb2.Methodology_Exposure:
+                df_parent_mcaps = self.__mcaps_to_data_frame(mcaps=request.parent_mcaps)
+                df_final = exposure.cap_exposure(
+                    df_parent_mcaps=df_parent_mcaps, df_mcaps=df_mcaps
+                )
+                continue
+
+            if i_component_index > 0:
+                df_merged = df_mcaps.merge(df_grouped, on="c1", how="inner")[
+                    ["c1", "c2", "weight_plus_residual", "ConstituentId"]
+                ]
+                df_merged.rename(columns={"weight_plus_residual": "mcap"}, inplace=True)
+                df_merged.drop_duplicates(
+                    subset="c" + str(i_component_index), inplace=True
+                )
+                df_grouped = (
+                    df_merged.groupby("c" + str(i_component_index + 1))["mcap"]
+                    .sum()
+                    .reset_index()
+                    .sort_values("mcap", ascending=False)
+                )
+
             else:
-                componentPcts[key] = mcap.mcap / sumMcaps
-        logger.info("__mcaps_to_component_pcts: componentPcts: %s", componentPcts)
-        return componentPcts
+                df_grouped = (
+                    df_mcaps.groupby("c" + str(i_component_index + 1))["mcap"]
+                    .sum()
+                    .reset_index()
+                    .sort_values("mcap", ascending=False)
+                )
+
+            if len(methodology_data.limitInfos) == 0:
+                cap_limit = 0
+            else:
+                limit_info = methodology_data.limitInfos[0]
+                cap_limit = limit_info.limit
+
+            if methodology_data.methodology == capping_pb2.Methodology_Ladder:
+                df_grouped = ladder.cap_ladder(
+                    methodology_data=methodology_data,
+                    df_grouped=df_grouped
+                )
+            else:
+                df_grouped = Core.cap_component(
+                    df_grouped=df_grouped,
+                    cap_limit=cap_limit,
+                    is_first_iteration=True,
+                )
+
+            cols = list(
+                df_mcaps.columns if i_component_index == 0 else df_final.columns
+            )
+            cols.append("factor")
+            cols[0] = "mcap_x"
+
+            if i_component_index == 0:
+                df_final = df_mcaps.merge(
+                    df_grouped, on="c" + str(i_component_index + 1), how="inner"
+                )[cols]
+            else:
+                df_final = df_final.merge(
+                    df_grouped, on="c" + str(i_component_index + 1), how="inner"
+                )[cols]
+
+            df_final.rename(
+                columns={
+                   "mcap_x": "mcap",
+                    "factor": "c" + str(i_component_index + 1) + "_factor",
+                },
+                inplace=True,
+            )
+        df_final["factor"] = df_final.apply(
+            lambda x: self.__multiply_factors(
+                num_components=(i_component_index + 1), df_row=x
+            ),
+            axis=1,
+        )
+        return df_final
+
+    def __multiply_factors(self, num_components: int, df_row: pd.Series):
+        factor = df_row["c1_factor"]
+
+        if num_components == 1:
+            return factor
+
+        for i in range(2, (num_components + 1)):
+            factor *= df_row["c" + str(i) + "_factor"]
+
+        return factor
 
     def Cap(self, request, context):
+        # print("methodology is: " + capping_pb2.Methodology.Name(request.methodology))
 
-        logger.info("Cap Function called")
-        # logger.info("methodology is: " + Methodology.Name(request.methodology))
-        lstComponentWghts = []
+        df_factors = self.__cap(request=request)
 
-        componentPcts = self.__mcaps_to_component_pcts(
-            mcaps=request.mcaps, componentIndex=0)
+        cap_result = capping_pb2.CapResult()
+        factors = list(df_factors["factor"])
+        max_factor = max(factors)
 
-        componentIndex = 0
-        for md in request.methodologyDatas:
-            if len(md.limitInfos) == 0:
-                limit = 0
+        for index, row in df_factors.iterrows():
+            if request.mcapDecreasingFactors:
+                factor = capping_pb2.Capfactor(ConstituentID=row["ConstituentId"],
+                                               factor=round(row["factor"] / max_factor, 15))
+                cap_result.capfactors.append(factor)
+
             else:
-                limitInfo = md.limitInfos[0]
-                limit = limitInfo.limit
-                # limitName = limitInfo.limitName
+                factor = capping_pb2.Capfactor(ConstituentID=row["ConstituentId"], factor=round(row["factor"], 15))
+                cap_result.capfactors.append(factor)
 
-            componentWghts = cap_nth(limit=limit, componentPcts=componentPcts,
-                                     applyLimitToNthLargestAndBelow=md.applyLimitToNthLargestAndBelow)
-            if (componentIndex + 1) < len(request.methodologyDatas):
-                for componentWght in componentWghts:
-                    componentPcts[componentWght] = componentWghts[componentWght].weightPlusResidual
-
-                if request.methodology != Methodology_Ladder:
-                    componentPcts = mcap_nxt_cmpt(mcaps=request.mcaps,
-                                                  weightsPlusResiduals=componentPcts,
-                                                  componentIndex=componentIndex + 1)
-            lstComponentWghts.append(componentWghts)
-            componentIndex += 1
-
-        cpResults = CapResult()
-        i = 0
-        while i < len(request.mcaps):
-            factor = 1
-            iMd = 0
-            while iMd < len(request.methodologyDatas):
-                iComponentIndex = 0 if request.methodology == Methodology_Ladder else iMd
-                key = request.mcaps[i].components[iComponentIndex]
-                f = lstComponentWghts[iMd][key].weightPlusResidual / lstComponentWghts[iMd][key].pctMcap
-                factor *= f
-                iMd += 1
-            """cpResults.CappingFactor.append(round(factor, 15))
-            cpResults.Id.append(key)
-            """
-            cpResults.capfactors.update({request.mcaps[i].ConstituentId: round(factor, 15)})
-            i += 1
-
-        if request.mcapDecreasingFactors:
-            return mcap_decreasing(cpResults)
-
-        return cpResults
+        return cap_result
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    add_CappingServicer_to_server(
-        CappingServicer(), server)
-    server.add_insecure_port('[::]:50051')
+    capping_pb2_grpc.add_CappingServicer_to_server(CappingServicer(), server)
+    server.add_insecure_port("[::]:50051")
     server.start()
     server.wait_for_termination()
 
 
-if __name__ == '__main__':
-    logger = logging.getLogger(__name__)
+if __name__ == "__main__":
+    logging.basicConfig()
     serve()

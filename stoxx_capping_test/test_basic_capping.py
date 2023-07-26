@@ -28,10 +28,13 @@ def grpc_stub_cls(grpc_channel):
 def test_basic_capping(grpc_stub):
     ci = capping_pb2.CapInput()
 
-    ci.methodology = capping_pb2.Methodology_Fixed
-
-    ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos=[capping_pb2.LimitInfo(limit=0.1)],
-                                                           notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_Error))  # basic
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(
+            methodology=capping_pb2.Methodology.Methodology_Fixed,
+            limitInfos=[capping_pb2.LimitInfo(limit=0.1)],
+            notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_NotApplicable,
+        )
+    )
 
     ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
@@ -55,12 +58,13 @@ def test_basic_capping(grpc_stub):
     ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['17'], ConstituentId="17"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['18'], ConstituentId="18"))
     cpResult = grpc_stub.Cap(ci)
-    for Id in cpResult.capfactors:
-        print(Id, cpResult.capfactors[Id])
-    Result = cpResult.capfactors
+    dict = {}
+    for i in cpResult.capfactors:
+        dict[i.ConstituentID] = i.factor
+
     Expected = {'18': 1.044776119402985, '15': 1.044776119402985, '16': 1.044776119402985, '6': 1.044776119402985,
                 '5': 1.044776119402985, '10': 1.044776119402985, '17': 1.044776119402985, '11': 1.044776119402985,
                 '13': 1.044776119402985, '7': 1.044776119402985, '9': 1.044776119402985, '1': 0.833333333333333,
                 '2': 0.909090909090909, '14': 1.044776119402985, '12': 1.044776119402985, '4': 1.044776119402985,
                 '3': 1.0, '8': 1.044776119402985}
-    assert Expected == Result
+    assert dict == Expected

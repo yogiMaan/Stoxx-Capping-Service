@@ -29,31 +29,35 @@ enum Methodology {
 	Methodology_Multi = 1;
 	Methodology_Ladder = 2;
 	Methodology_Regulatory = 3;  //Not implemented
-	Methodology_Exposure = 4;  	 //Not implemented
-	Methodology_CapFloor = 5;	 //Not implemented
+	Methodology_Exposure = 4;
+	Methodology_FactorLimiter = 5;  //Not implemented
+	Methodology_CapFloor = 6;	 //Not implemented
 }
 
-message LimitInfo {		
+message LimitInfo {
 	double limit = 1;
 	optional string limitName = 2;
 }
 
 
-message MethodologyData {	
-	repeated LimitInfo limitInfos = 1;
-	optional int32 applyLimitToNthLargestAndBelow = 2;		//Used by Methodology_Ladder
-	NotEnoughComponentsBehaviour notEnoughComponentsBehaviour = 3;
+message MethodologyData {
+	Methodology methodology = 1;
+	repeated LimitInfo limitInfos = 2;
+	NotEnoughComponentsBehaviour notEnoughComponentsBehaviour = 4;
 }
 
 message CapInput {
-	Methodology methodology = 1;
-	repeated MethodologyData methodologyDatas = 2;	
+	repeated MethodologyData methodologyDatas = 1;
+	repeated Mcap parent_mcaps = 2;
 	repeated Mcap mcaps = 3;
-	repeated Mcap parentMcaps = 5;
 	bool mcapDecreasingFactors = 4;
 }
+
 message CapResult {
-    map<string,double> capfactors =1;
+    repeated Capfactor capfactors =1;
 }
 
-
+message Capfactor {
+    string ConstituentID = 1;
+    double factor = 2;
+}

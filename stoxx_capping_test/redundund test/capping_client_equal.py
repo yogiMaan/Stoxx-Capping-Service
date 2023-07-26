@@ -5,8 +5,7 @@ from __future__ import print_function
 import logging
 import grpc
 import capping_pb2
-from stoxx_capping_service import capping_pb2_grpc
-
+import capping_pb2_grpc
 
 def cap(stub):
     #https://protobuf.dev/reference/python/python-generated/#repeated-fields 

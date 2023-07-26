@@ -23,8 +23,14 @@ def grpc_stub_cls(grpc_channel):
 def test_equal_capping(grpc_stub):
     ci = capping_pb2.CapInput()
 
-    ci.methodology = capping_pb2.Methodology_Fixed
-    ci.methodologyDatas.append(capping_pb2.MethodologyData())  # equal
+    # ci.methodologyDatas.append(capping_pb2.MethodologyData())  # equal
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(
+            methodology=capping_pb2.Methodology.Methodology_Fixed,
+            limitInfos=[capping_pb2.LimitInfo(limit=0.0555555555555555556)],  # 1/n
+            notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_NotApplicable,
+        )
+    )
 
     ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
@@ -49,10 +55,9 @@ def test_equal_capping(grpc_stub):
     ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['18'], ConstituentId="18"))
 
     cpResult = grpc_stub.Cap(ci)
-    for Id in cpResult.capfactors:
-        print(Id, cpResult.capfactors[Id])
-    Result = cpResult.capfactors
-    print(Result)
+    dict = {}
+    for i in cpResult.capfactors:
+        dict[i.ConstituentID] = i.factor
     Expected = {'18': 1.851851851851852, '15': 1.851851851851852, '16': 1.851851851851852, '6': 1.111111111111111,
                 '5': 0.793650793650793, '10': 1.388888888888889, '17': 1.851851851851852, '11': 1.388888888888889,
                 '13': 1.388888888888889, '7': 1.111111111111111, '9': 1.111111111111111, '1': 0.462962962962963,
@@ -60,4 +65,4 @@ def test_equal_capping(grpc_stub):
                 '3': 0.555555555555555, '8': 1.111111111111111
                 }
 
-    assert Expected == Result
+    assert dict == Expected

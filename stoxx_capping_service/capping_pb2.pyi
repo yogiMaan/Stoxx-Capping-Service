@@ -7,6 +7,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 Methodology_CapFloor: Methodology
 Methodology_Exposure: Methodology
+Methodology_FactorLimiter: Methodology
 Methodology_Fixed: Methodology
 Methodology_Ladder: Methodology
 Methodology_Multi: Methodology
@@ -16,31 +17,30 @@ NotEnoughComponentsBehaviour_NotApplicable: NotEnoughComponentsBehaviour
 NotEnoughComponentsBehaviour_OneOverN: NotEnoughComponentsBehaviour
 
 class CapInput(_message.Message):
-    __slots__ = ["mcapDecreasingFactors", "mcaps", "methodology", "methodologyDatas", "parentMcaps"]
+    __slots__ = ["mcapDecreasingFactors", "mcaps", "methodologyDatas", "parent_mcaps"]
     MCAPDECREASINGFACTORS_FIELD_NUMBER: _ClassVar[int]
     MCAPS_FIELD_NUMBER: _ClassVar[int]
     METHODOLOGYDATAS_FIELD_NUMBER: _ClassVar[int]
-    METHODOLOGY_FIELD_NUMBER: _ClassVar[int]
-    PARENTMCAPS_FIELD_NUMBER: _ClassVar[int]
+    PARENT_MCAPS_FIELD_NUMBER: _ClassVar[int]
     mcapDecreasingFactors: bool
     mcaps: _containers.RepeatedCompositeFieldContainer[Mcap]
-    methodology: Methodology
     methodologyDatas: _containers.RepeatedCompositeFieldContainer[MethodologyData]
-    parentMcaps: _containers.RepeatedCompositeFieldContainer[Mcap]
-    def __init__(self, methodology: _Optional[_Union[Methodology, str]] = ..., methodologyDatas: _Optional[_Iterable[_Union[MethodologyData, _Mapping]]] = ..., mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., parentMcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcapDecreasingFactors: bool = ...) -> None: ...
+    parent_mcaps: _containers.RepeatedCompositeFieldContainer[Mcap]
+    def __init__(self, methodologyDatas: _Optional[_Iterable[_Union[MethodologyData, _Mapping]]] = ..., parent_mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcaps: _Optional[_Iterable[_Union[Mcap, _Mapping]]] = ..., mcapDecreasingFactors: bool = ...) -> None: ...
 
 class CapResult(_message.Message):
     __slots__ = ["capfactors"]
-    class CapfactorsEntry(_message.Message):
-        __slots__ = ["key", "value"]
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: float
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[float] = ...) -> None: ...
     CAPFACTORS_FIELD_NUMBER: _ClassVar[int]
-    capfactors: _containers.ScalarMap[str, float]
-    def __init__(self, capfactors: _Optional[_Mapping[str, float]] = ...) -> None: ...
+    capfactors: _containers.RepeatedCompositeFieldContainer[Capfactor]
+    def __init__(self, capfactors: _Optional[_Iterable[_Union[Capfactor, _Mapping]]] = ...) -> None: ...
+
+class Capfactor(_message.Message):
+    __slots__ = ["ConstituentID", "factor"]
+    CONSTITUENTID_FIELD_NUMBER: _ClassVar[int]
+    ConstituentID: str
+    FACTOR_FIELD_NUMBER: _ClassVar[int]
+    factor: float
+    def __init__(self, ConstituentID: _Optional[str] = ..., factor: _Optional[float] = ...) -> None: ...
 
 class LimitInfo(_message.Message):
     __slots__ = ["limit", "limitName"]
@@ -61,14 +61,14 @@ class Mcap(_message.Message):
     def __init__(self, mcap: _Optional[float] = ..., components: _Optional[_Iterable[str]] = ..., ConstituentId: _Optional[str] = ...) -> None: ...
 
 class MethodologyData(_message.Message):
-    __slots__ = ["applyLimitToNthLargestAndBelow", "limitInfos", "notEnoughComponentsBehaviour"]
-    APPLYLIMITTONTHLARGESTANDBELOW_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["limitInfos", "methodology", "notEnoughComponentsBehaviour"]
     LIMITINFOS_FIELD_NUMBER: _ClassVar[int]
+    METHODOLOGY_FIELD_NUMBER: _ClassVar[int]
     NOTENOUGHCOMPONENTSBEHAVIOUR_FIELD_NUMBER: _ClassVar[int]
-    applyLimitToNthLargestAndBelow: int
     limitInfos: _containers.RepeatedCompositeFieldContainer[LimitInfo]
+    methodology: Methodology
     notEnoughComponentsBehaviour: NotEnoughComponentsBehaviour
-    def __init__(self, limitInfos: _Optional[_Iterable[_Union[LimitInfo, _Mapping]]] = ..., applyLimitToNthLargestAndBelow: _Optional[int] = ..., notEnoughComponentsBehaviour: _Optional[_Union[NotEnoughComponentsBehaviour, str]] = ...) -> None: ...
+    def __init__(self, methodology: _Optional[_Union[Methodology, str]] = ..., limitInfos: _Optional[_Iterable[_Union[LimitInfo, _Mapping]]] = ..., notEnoughComponentsBehaviour: _Optional[_Union[NotEnoughComponentsBehaviour, str]] = ...) -> None: ...
 
 class NotEnoughComponentsBehaviour(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
