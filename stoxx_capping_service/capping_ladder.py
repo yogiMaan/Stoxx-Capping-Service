@@ -2,9 +2,6 @@ import capping_Core as Core
 import logging
 import sys
 import pandas as pd
-logger = logging.getLogger(__name__)
-
-
 
 def flatten_results_for_ladder(list_dfs: list):
     df_root = list_dfs[0]

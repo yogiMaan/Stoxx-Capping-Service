@@ -58,13 +58,13 @@ def test_basic_capping(grpc_stub):
     ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['17'], ConstituentId="17"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=3.0, components=['18'], ConstituentId="18"))
     cpResult = grpc_stub.Cap(ci)
-    dict = {}
+    dictresult = {}
     for i in cpResult.capfactors:
-        dict[i.ConstituentID] = i.factor
+        dictresult[i.ConstituentID] = i.factor
 
     Expected = {'18': 1.044776119402985, '15': 1.044776119402985, '16': 1.044776119402985, '6': 1.044776119402985,
                 '5': 1.044776119402985, '10': 1.044776119402985, '17': 1.044776119402985, '11': 1.044776119402985,
                 '13': 1.044776119402985, '7': 1.044776119402985, '9': 1.044776119402985, '1': 0.833333333333333,
                 '2': 0.909090909090909, '14': 1.044776119402985, '12': 1.044776119402985, '4': 1.044776119402985,
                 '3': 1.0, '8': 1.044776119402985}
-    assert dict == Expected
+    assert dictresult == Expected

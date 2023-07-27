@@ -46,9 +46,9 @@ def test_equal_capping(grpc_stub):
     ci.mcaps.append(capping_pb2.Mcap(mcap=1.0, components=["e"], ConstituentId="6"))
 
     cpResult = grpc_stub.Cap(ci)
-    dict = {}
+    Resultdict = {}
     for i in cpResult.capfactors:
-        dict[i.ConstituentID] = i.factor
+        Resultdict[i.ConstituentID] = i.factor
     Expected = {'1': 1.166666666666667,
                 '2': 1.166666666666667,
                 '3': 1.0,
@@ -56,4 +56,4 @@ def test_equal_capping(grpc_stub):
                 '5': 0.5,
                 '6': 5.0}
 
-    assert dict == Expected
+    assert Resultdict == Expected

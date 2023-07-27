@@ -1,19 +1,26 @@
 """Python implementation of the index capping"""
-from concurrent import futures
-import logging
-import pandas as pd
-import grpc
+
 import capping_pb2
 from stoxx_capping_service import capping_pb2_grpc
 import capping_Core as Core
 import capping_ladder as ladder
 import capping_exposure as exposure
+from concurrent import futures
+from core_logger import get_logger
+import pandas as pd
+import grpc
+import sys
+import os
+
+logger = get_logger(__name__, 'logs/debug.log', use_formatter=True)
+df_logger = get_logger(str(__name__) + '_dfs', 'logs/debug.log', use_formatter=False)
 
 
 class CappingServicer(capping_pb2_grpc.CappingServicer):
     """Provides methods that implement functionality of capping server."""
 
-    def __mcaps_to_data_frame(self, mcaps):
+    @staticmethod
+    def __mcaps_to_data_frame(mcaps):
         rows = list()
         for mcap in mcaps:
             d = {"mcap": mcap.mcap, "c1": mcap.components[0], "ConstituentId": mcap.ConstituentId}
@@ -25,14 +32,26 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
         return pd.DataFrame(rows)
 
+    @staticmethod
+    def __multiply_factors(num_components: int, df_row: pd.Series):
+        factor = df_row["c1_factor"] if "c1_factor" in df_row else df_row["factor"]
+
+        if num_components == 1:
+            return factor
+
+        for i in range(2, (num_components + 1)):
+            factor *= df_row["c" + str(i) + "_factor"]
+
+        return factor
+
     def __cap(self, request):
+        logger.info("Function %s:", sys._getframe().f_code.co_name)
         df_mcaps = self.__mcaps_to_data_frame(mcaps=request.mcaps)
 
         for i_component_index, methodology_data in enumerate(request.methodologyDatas):
-            print(
-                "methodology: "
-                + capping_pb2.Methodology.Name(methodology_data.methodology)
-            )
+            logger.info("methodology: %s", capping_pb2.Methodology.Name(methodology_data.methodology))
+            logger.info("Running Iteration %s: ", str(i_component_index + 1))
+
             if methodology_data.methodology == capping_pb2.Methodology_Exposure:
                 df_parent_mcaps = self.__mcaps_to_data_frame(mcaps=request.parent_mcaps)
                 df_final = exposure.cap_exposure(
@@ -62,13 +81,14 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
                     .reset_index()
                     .sort_values("mcap", ascending=False)
                 )
-
+            logger.info("Iteration %s Grouped Mcaps : ", str(i_component_index + 1))
+            df_logger.info("\n %s", df_mcaps.to_markdown(index=False))
             if len(methodology_data.limitInfos) == 0:
                 cap_limit = 0
             else:
                 limit_info = methodology_data.limitInfos[0]
                 cap_limit = limit_info.limit
-
+            logger.info("Iteration %s Limit %s: ",str(i_component_index + 1), cap_limit)
             if methodology_data.methodology == capping_pb2.Methodology_Ladder:
                 df_grouped = ladder.cap_ladder(
                     methodology_data=methodology_data,
@@ -98,33 +118,25 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
             df_final.rename(
                 columns={
-                   "mcap_x": "mcap",
+                    "mcap_x": "mcap",
                     "factor": "c" + str(i_component_index + 1) + "_factor",
                 },
                 inplace=True,
             )
+
         df_final["factor"] = df_final.apply(
             lambda x: self.__multiply_factors(
                 num_components=(i_component_index + 1), df_row=x
             ),
             axis=1,
         )
+        logger.info("result after Iteration %s : ", str(i_component_index + 1))
+        df_logger.info("\n %s", df_final.to_markdown(index=False))
         return df_final
 
-    def __multiply_factors(self, num_components: int, df_row: pd.Series):
-        factor = df_row["c1_factor"] if "c1_factor" in df_row else df_row["factor"]
-
-        if num_components == 1:
-            return factor
-
-        for i in range(2, (num_components + 1)):
-            factor *= df_row["c" + str(i) + "_factor"]
-
-        return factor
-
     def Cap(self, request, context):
-        # print("methodology is: " + capping_pb2.Methodology.Name(request.methodology))
 
+        logger.info("Function %s:", sys._getframe().f_code.co_name)
         df_factors = self.__cap(request=request)
 
         cap_result = capping_pb2.CapResult()
@@ -153,5 +165,4 @@ def serve():
 
 
 if __name__ == "__main__":
-    logging.basicConfig()
     serve()

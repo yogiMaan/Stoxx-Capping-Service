@@ -11,11 +11,15 @@ from stoxx_capping_service import capping_pb2_grpc
 def cap(stub):
     #https://protobuf.dev/reference/python/python-generated/#repeated-fields 
     
-    ci = capping_pb2.CapInput()    
+    ci = capping_pb2.CapInput()
 
-    ci.methodology = capping_pb2.Methodology_Fixed
-    
-    ci.methodologyDatas.append(capping_pb2.MethodologyData(limitInfos= [capping_pb2.LimitInfo(limit=0.1)], notEnoughComponentsBehaviour= capping_pb2.NotEnoughComponentsBehaviour_Error)) #basic    
+    ci.methodologyDatas.append(
+        capping_pb2.MethodologyData(
+            methodology=capping_pb2.Methodology.Methodology_Fixed,
+            limitInfos=[capping_pb2.LimitInfo(limit=0.1)],
+            notEnoughComponentsBehaviour=capping_pb2.NotEnoughComponentsBehaviour_NotApplicable,
+        )
+    )
 
     ci.mcaps.append(capping_pb2.Mcap(mcap=12.0, components=['1'], ConstituentId="1"))
     ci.mcaps.append(capping_pb2.Mcap(mcap=11.0, components=['2'], ConstituentId="2"))
@@ -41,8 +45,10 @@ def cap(stub):
 
     cpResult = stub.Cap(ci)    
     print ("got results")
-    print(cpResult)
-
+    dict = {}
+    for i in cpResult.capfactors:
+        dict[i.ConstituentID] = i.factor
+    print(dict)
     
 
 def run():

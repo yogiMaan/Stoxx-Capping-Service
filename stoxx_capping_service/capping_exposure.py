@@ -1,7 +1,6 @@
 import logging
 import sys
 import pandas as pd
-logger = logging.getLogger(__name__)
 
 def cap_exposure(df_parent_mcaps: pd.DataFrame, df_mcaps: pd.DataFrame):
     df_parent_grouped = df_parent_mcaps.groupby("c1")["mcap"].sum().reset_index()
