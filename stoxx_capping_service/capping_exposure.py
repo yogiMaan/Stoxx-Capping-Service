@@ -4,6 +4,13 @@ import pandas as pd
 
 
 def cap_exposure(df_parent_mcaps: pd.DataFrame, df_mcaps: pd.DataFrame):
+    """Cap the exposure of the child index to the parent index.
+    args:
+        df_parent_mcaps: DataFrame of parent index mcaps
+        df_mcaps: DataFrame of child index mcaps
+    returns:
+        DataFrame of capped mcaps
+    """
     try:
         df_parent_grouped = df_parent_mcaps.groupby("c1")["mcap"].sum().reset_index()
         df_parent_grouped_sum = round(df_parent_grouped["mcap"].sum(), 15)

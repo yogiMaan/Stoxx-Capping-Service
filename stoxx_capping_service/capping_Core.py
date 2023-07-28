@@ -17,7 +17,19 @@ def cap_component(
         sum_residuals: float = None,
         sum_truncated_weight_under_cap_limit: float = None,
         exclude_nth_rows_from_cap: int = None,
-):
+) -> pd.DataFrame:
+    """
+    This function caps the weights of the components in the index. This is the core function of the capping service.
+    Args:
+         df_grouped: grouped mcaps dataframe
+         cap_limit: float
+         is_first_iteration: bool
+         sum_residuals: float (for further iterations)
+         sum_truncated_weight_under_cap_limit: float (for further iterations)
+         exclude_nth_rows_from_cap: int (optional)
+    return:
+        dataframe
+    """
     try:
         logger.info("Function %s:", sys._getframe().f_code.co_name)
         if is_first_iteration and exclude_nth_rows_from_cap is None:
@@ -116,6 +128,14 @@ def cap_component(
 
 
 def __after_nth_largest_components(componentPcts, n):
+    """
+    This function returns the nth largest components
+    Args:
+        componentPcts: dict
+        n: int
+    return:
+        set
+    """
     try:
         logger.info("Function %s: starting", sys._getframe().f_code.co_name)
         excludes = set()

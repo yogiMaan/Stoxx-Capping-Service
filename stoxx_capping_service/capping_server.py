@@ -21,6 +21,11 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
     @staticmethod
     def __mcaps_to_data_frame(mcaps):
+        """ Converts the list of mcaps to a dataframe
+        Args:   mcaps: list of mcaps
+        Return: dataframe
+
+        """
         try:
             rows = list()
             for mcap in mcaps:
@@ -38,6 +43,12 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
     @staticmethod
     def __multiply_factors(num_components: int, df_row: pd.Series):
+        """ Multiplies the factors for the components if they are result of multiple iterations
+        Args:   num_components: number of components
+                df_row: dataframe row
+        Return: factor
+
+        """
         try:
             factor = df_row["c1_factor"] if "c1_factor" in df_row else df_row["factor"]
 
@@ -53,6 +64,12 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
             return factor
 
     def __cap(self, request):
+        """ Caps the components. Iterates through the list of methodologies and caps the components,
+            then returns the final dataframe.
+        Args:   request: request object
+        Return: dataframe
+
+        """
         try:
             logger.info("Function %s:", sys._getframe().f_code.co_name)
             df_mcaps = self.__mcaps_to_data_frame(mcaps=request.mcaps)
@@ -148,6 +165,12 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
             return df_final
 
     def Cap(self, request, context):
+        """ Caps the components. Main entry point of the service
+        Args:   request: request object
+                context: context object
+        Return: cap_result object
+
+        """
         try:
             logger.info("Function %s:", sys._getframe().f_code.co_name)
             df_factors = self.__cap(request=request)

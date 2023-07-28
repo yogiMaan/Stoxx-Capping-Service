@@ -4,6 +4,12 @@ import sys
 import pandas as pd
 
 def flatten_results_for_ladder(list_dfs: list):
+    """Flatten the results of the ladder into a single dataframe
+    args:
+       :list_dfs: list of dataframes
+    :return
+        dataframe
+    """
     try:
         df_root = list_dfs[0]
         for idx, df in enumerate(list_dfs):
@@ -25,6 +31,13 @@ def flatten_results_for_ladder(list_dfs: list):
 
 # df_grouped is grouped df_macp
 def cap_ladder(methodology_data, df_grouped):
+    """Ladder capping
+    args:
+        :methodology_data: methodology data
+        :df_grouped: grouped dataframe
+    :return
+        dataframe
+    """
     try:
         df_group_list = list()
         for n, limit in enumerate(methodology_data.limitInfos):
