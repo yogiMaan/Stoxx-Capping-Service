@@ -12,8 +12,8 @@ import grpc
 import sys
 import os
 
-logger = get_logger(__name__, 'logs/debug.log', use_formatter=True)
-df_logger = get_logger(str(__name__) + '_dfs', 'logs/debug.log', use_formatter=False)
+logger = get_logger(__name__, "logs/debug.log", use_formatter=True)
+df_logger = get_logger(str(__name__) + "_dfs", "logs/debug.log", use_formatter=False)
 
 
 class CappingServicer(capping_pb2_grpc.CappingServicer):
@@ -21,7 +21,7 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
     @staticmethod
     def __mcaps_to_data_frame(mcaps):
-        """ Converts the list of mcaps to a dataframe
+        """Converts the list of mcaps to a dataframe
         Args:   mcaps: list of mcaps
         Return: dataframe
 
@@ -29,7 +29,11 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
         try:
             rows = list()
             for mcap in mcaps:
-                d = {"mcap": mcap.mcap, "c1": mcap.components[0], "ConstituentId": mcap.ConstituentId}
+                d = {
+                    "mcap": mcap.mcap,
+                    "c1": mcap.components[0],
+                    "ConstituentId": mcap.ConstituentId,
+                }
 
                 # if we are doing multi component capping, add the additional components
                 for i in range(1, len(mcap.components)):
@@ -43,7 +47,7 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
     @staticmethod
     def __multiply_factors(num_components: int, df_row: pd.Series):
-        """ Multiplies the factors for the components if they are result of multiple iterations
+        """Multiplies the factors for the components if they are result of multiple iterations
         Args:   num_components: number of components
                 df_row: dataframe row
         Return: factor
@@ -64,7 +68,7 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
             return factor
 
     def __cap(self, request):
-        """ Caps the components. Iterates through the list of methodologies and caps the components,
+        """Caps the components. Iterates through the list of methodologies and caps the components,
             then returns the final dataframe.
         Args:   request: request object
         Return: dataframe
@@ -74,12 +78,19 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
             logger.info("Function %s:", sys._getframe().f_code.co_name)
             df_mcaps = self.__mcaps_to_data_frame(mcaps=request.mcaps)
 
-            for i_component_index, methodology_data in enumerate(request.methodologyDatas):
-                logger.info("methodology: %s", capping_pb2.Methodology.Name(methodology_data.methodology))
+            for i_component_index, methodology_data in enumerate(
+                request.methodologyDatas
+            ):
+                logger.info(
+                    "methodology: %s",
+                    capping_pb2.Methodology.Name(methodology_data.methodology),
+                )
                 logger.info("Running Iteration %s: ", str(i_component_index + 1))
 
                 if methodology_data.methodology == capping_pb2.Methodology_Exposure:
-                    df_parent_mcaps = self.__mcaps_to_data_frame(mcaps=request.parent_mcaps)
+                    df_parent_mcaps = self.__mcaps_to_data_frame(
+                        mcaps=request.parent_mcaps
+                    )
                     df_final = exposure.cap_exposure(
                         df_parent_mcaps=df_parent_mcaps, df_mcaps=df_mcaps
                     )
@@ -89,7 +100,9 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
                     df_merged = df_mcaps.merge(df_grouped, on="c1", how="inner")[
                         ["c1", "c2", "weight_plus_residual", "ConstituentId"]
                     ]
-                    df_merged.rename(columns={"weight_plus_residual": "mcap"}, inplace=True)
+                    df_merged.rename(
+                        columns={"weight_plus_residual": "mcap"}, inplace=True
+                    )
                     df_merged.drop_duplicates(
                         subset="c" + str(i_component_index), inplace=True
                     )
@@ -114,11 +127,12 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
                 else:
                     limit_info = methodology_data.limitInfos[0]
                     cap_limit = limit_info.limit
-                logger.info("Iteration %s Limit %s: ",str(i_component_index + 1), cap_limit)
+                logger.info(
+                    "Iteration %s Limit %s: ", str(i_component_index + 1), cap_limit
+                )
                 if methodology_data.methodology == capping_pb2.Methodology_Ladder:
                     df_grouped = ladder.cap_ladder(
-                        methodology_data=methodology_data,
-                        df_grouped=df_grouped
+                        methodology_data=methodology_data, df_grouped=df_grouped
                     )
                 else:
                     df_grouped = Core.cap_component(
@@ -165,7 +179,7 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
             return df_final
 
     def Cap(self, request, context):
-        """ Caps the components. Main entry point of the service
+        """Caps the components. Main entry point of the service
         Args:   request: request object
                 context: context object
         Return: cap_result object
@@ -181,12 +195,17 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 
             for index, row in df_factors.iterrows():
                 if request.mcapDecreasingFactors:
-                    factor = capping_pb2.Capfactor(ConstituentID=row["ConstituentId"],
-                                                   factor=round(row["factor"] / max_factor, 15))
+                    factor = capping_pb2.Capfactor(
+                        ConstituentID=row["ConstituentId"],
+                        factor=round(row["factor"] / max_factor, 15),
+                    )
                     cap_result.capfactors.append(factor)
 
                 else:
-                    factor = capping_pb2.Capfactor(ConstituentID=row["ConstituentId"], factor=round(row["factor"], 15))
+                    factor = capping_pb2.Capfactor(
+                        ConstituentID=row["ConstituentId"],
+                        factor=round(row["factor"], 15),
+                    )
                     cap_result.capfactors.append(factor)
         except Exception as e:
             logger.error("Error in Cap: %s", e)

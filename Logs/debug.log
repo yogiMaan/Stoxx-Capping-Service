@@ -1,0 +1,646 @@
+2023-09-07 12:11:07,156 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:07,156 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:07,157 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:07,157 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:07,159 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:11:07,166 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.05555555555555555: 
+2023-09-07 12:11:07,166 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:07,171 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:07,174 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:07,179 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.462963 | 0.462963 |
+|     11 |    2 |               2 |    0.505051 | 0.505051 |
+|     10 |    3 |               3 |    0.555556 | 0.555556 |
+|      9 |    4 |               4 |    0.617284 | 0.617284 |
+|      7 |    5 |               5 |    0.793651 | 0.793651 |
+|      5 |    6 |               6 |    1.11111  | 1.11111  |
+|      5 |    7 |               7 |    1.11111  | 1.11111  |
+|      5 |    8 |               8 |    1.11111  | 1.11111  |
+|      5 |    9 |               9 |    1.11111  | 1.11111  |
+|      4 |   10 |              10 |    1.38889  | 1.38889  |
+|      4 |   11 |              11 |    1.38889  | 1.38889  |
+|      4 |   12 |              12 |    1.38889  | 1.38889  |
+|      4 |   13 |              13 |    1.38889  | 1.38889  |
+|      3 |   14 |              14 |    1.85185  | 1.85185  |
+|      3 |   15 |              15 |    1.85185  | 1.85185  |
+|      3 |   16 |              16 |    1.85185  | 1.85185  |
+|      3 |   17 |              17 |    1.85185  | 1.85185  |
+|      3 |   18 |              18 |    1.85185  | 1.85185  |
+2023-09-07 12:11:11,512 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:11,512 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:11,513 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:11,513 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:11,515 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:11:11,524 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:11:11,525 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,532 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 12:11:11,554 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:11,554 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:11,554 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:11,554 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:11,556 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:11:11,556 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.05555555555555555: 
+2023-09-07 12:11:11,556 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,560 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,563 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,568 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.462963 | 0.462963 |
+|     11 |    2 |               2 |    0.505051 | 0.505051 |
+|     10 |    3 |               3 |    0.555556 | 0.555556 |
+|      9 |    4 |               4 |    0.617284 | 0.617284 |
+|      7 |    5 |               5 |    0.793651 | 0.793651 |
+|      5 |    6 |               6 |    1.11111  | 1.11111  |
+|      5 |    7 |               7 |    1.11111  | 1.11111  |
+|      5 |    8 |               8 |    1.11111  | 1.11111  |
+|      5 |    9 |               9 |    1.11111  | 1.11111  |
+|      4 |   10 |              10 |    1.38889  | 1.38889  |
+|      4 |   11 |              11 |    1.38889  | 1.38889  |
+|      4 |   12 |              12 |    1.38889  | 1.38889  |
+|      4 |   13 |              13 |    1.38889  | 1.38889  |
+|      3 |   14 |              14 |    1.85185  | 1.85185  |
+|      3 |   15 |              15 |    1.85185  | 1.85185  |
+|      3 |   16 |              16 |    1.85185  | 1.85185  |
+|      3 |   17 |              17 |    1.85185  | 1.85185  |
+|      3 |   18 |              18 |    1.85185  | 1.85185  |
+2023-09-07 12:11:11,584 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:11,584 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:11,585 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Exposure
+2023-09-07 12:11:11,585 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:11,594 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ | c1   |   pct_parent |   pct_child |   factor |   mcap |   ConstituentId |
+|:-----|-------------:|------------:|---------:|-------:|----------------:|
+| a    |         0.35 |        0.3  |  1.16667 |     15 |               1 |
+| a    |         0.35 |        0.3  |  1.16667 |     15 |               2 |
+| b    |         0.3  |        0.3  |  1       |     30 |               3 |
+| c    |         0.2  |        0.19 |  1.05263 |     19 |               4 |
+| d    |         0.1  |        0.2  |  0.5     |     20 |               5 |
+| e    |         0.05 |        0.01 |  5       |      1 |               6 |
+2023-09-07 12:11:11,615 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:11,615 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:11,616 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Ladder
+2023-09-07 12:11:11,616 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:11,617 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:11:11,617 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:11:11,617 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,621 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,625 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,633 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.818182 | 0.818182 |
+|     10 |    3 |               3 |    0.8      | 0.8      |
+|      9 |    4 |               4 |    0.888889 | 0.888889 |
+|      7 |    5 |               5 |    1.12069  | 1.12069  |
+|      5 |    6 |               6 |    1.12069  | 1.12069  |
+|      5 |    7 |               7 |    1.12069  | 1.12069  |
+|      5 |    8 |               8 |    1.12069  | 1.12069  |
+|      5 |    9 |               9 |    1.12069  | 1.12069  |
+|      4 |   10 |              10 |    1.12069  | 1.12069  |
+|      4 |   11 |              11 |    1.12069  | 1.12069  |
+|      4 |   12 |              12 |    1.12069  | 1.12069  |
+|      4 |   13 |              13 |    1.12069  | 1.12069  |
+|      3 |   14 |              14 |    1.12069  | 1.12069  |
+|      3 |   15 |              15 |    1.12069  | 1.12069  |
+|      3 |   16 |              16 |    1.12069  | 1.12069  |
+|      3 |   17 |              17 |    1.12069  | 1.12069  |
+|      3 |   18 |              18 |    1.12069  | 1.12069  |
+2023-09-07 12:11:11,646 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:11,646 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:11,647 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:11,647 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:11,648 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId | c2   |
+|-------:|-----:|----------------:|:-----|
+|     12 |    1 |               1 | a    |
+|     11 |    2 |               2 | a    |
+|     10 |    3 |               3 | a    |
+|      9 |    4 |               4 | a    |
+|      7 |    5 |               5 | b    |
+|      5 |    6 |               6 | b    |
+|      5 |    7 |               7 | b    |
+|      5 |    8 |               8 | c    |
+|      5 |    9 |               9 | c    |
+|      4 |   10 |              10 | d    |
+|      4 |   11 |              11 | e    |
+|      4 |   12 |              12 | e    |
+|      4 |   13 |              13 | f    |
+|      3 |   14 |              14 | f    |
+|      3 |   15 |              15 | g    |
+|      3 |   16 |              16 | g    |
+|      3 |   17 |              17 | h    |
+|      3 |   18 |              18 | h    |
+2023-09-07 12:11:11,648 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:11:11,649 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,656 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:11,656 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 2: 
+2023-09-07 12:11:11,658 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 2 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId | c2   |
+|-------:|-----:|----------------:|:-----|
+|     12 |    1 |               1 | a    |
+|     11 |    2 |               2 | a    |
+|     10 |    3 |               3 | a    |
+|      9 |    4 |               4 | a    |
+|      7 |    5 |               5 | b    |
+|      5 |    6 |               6 | b    |
+|      5 |    7 |               7 | b    |
+|      5 |    8 |               8 | c    |
+|      5 |    9 |               9 | c    |
+|      4 |   10 |              10 | d    |
+|      4 |   11 |              11 | e    |
+|      4 |   12 |              12 | e    |
+|      4 |   13 |              13 | f    |
+|      3 |   14 |              14 | f    |
+|      3 |   15 |              15 | g    |
+|      3 |   16 |              16 | g    |
+|      3 |   17 |              17 | h    |
+|      3 |   18 |              18 | h    |
+2023-09-07 12:11:11,659 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 2 Limit 0.3: 
+2023-09-07 12:11:11,659 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:11,665 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 2 : 
+
+ |   mcap |   c1 |   ConstituentId | c2   |   c1_factor |   c2_factor |   factor |
+|-------:|-----:|----------------:|:-----|------------:|------------:|---------:|
+|     12 |    1 |               1 | a    |    0.833333 |    0.761364 | 0.63447  |
+|     11 |    2 |               2 | a    |    0.909091 |    0.761364 | 0.692149 |
+|     10 |    3 |               3 | a    |    1        |    0.761364 | 0.761364 |
+|      9 |    4 |               4 | a    |    1.04478  |    0.761364 | 0.795455 |
+|      7 |    5 |               5 | b    |    1.04478  |    1.15517  | 1.2069   |
+|      5 |    6 |               6 | b    |    1.04478  |    1.15517  | 1.2069   |
+|      5 |    7 |               7 | b    |    1.04478  |    1.15517  | 1.2069   |
+|      5 |    8 |               8 | c    |    1.04478  |    1.15517  | 1.2069   |
+|      5 |    9 |               9 | c    |    1.04478  |    1.15517  | 1.2069   |
+|      4 |   10 |              10 | d    |    1.04478  |    1.15517  | 1.2069   |
+|      4 |   11 |              11 | e    |    1.04478  |    1.15517  | 1.2069   |
+|      4 |   12 |              12 | e    |    1.04478  |    1.15517  | 1.2069   |
+|      4 |   13 |              13 | f    |    1.04478  |    1.15517  | 1.2069   |
+|      3 |   14 |              14 | f    |    1.04478  |    1.15517  | 1.2069   |
+|      3 |   15 |              15 | g    |    1.04478  |    1.15517  | 1.2069   |
+|      3 |   16 |              16 | g    |    1.04478  |    1.15517  | 1.2069   |
+|      3 |   17 |              17 | h    |    1.04478  |    1.15517  | 1.2069   |
+|      3 |   18 |              18 | h    |    1.04478  |    1.15517  | 1.2069   |
+2023-09-07 12:11:36,344 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:11:36,344 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:11:36,344 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:11:36,344 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:11:36,347 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:11:36,353 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:11:36,353 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:11:36,360 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 12:12:18,977 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:12:18,977 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:12:18,978 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:12:18,978 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:12:18,981 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:12:18,990 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:12:18,990 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:12:18,996 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 12:13:21,892 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:13:21,892 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:13:21,892 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:13:21,892 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:13:21,895 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:13:21,901 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:13:21,901 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:13:21,908 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 12:13:47,965 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 12:13:47,966 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 12:13:47,966 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 12:13:47,966 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 12:13:47,969 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 12:13:47,976 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 12:13:47,976 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 12:13:47,982 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 13:10:21,813 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 13:10:21,814 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 13:10:21,814 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 13:10:21,814 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 13:10:21,816 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 13:10:21,827 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 13:10:21,827 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 13:10:21,834 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 13:20:41,328 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 13:20:41,329 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 13:20:41,329 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 13:20:41,329 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 13:20:41,331 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 13:20:41,339 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 13:20:41,339 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 13:20:41,346 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
+2023-09-07 13:21:56,261 - INFO - stoxx_capping_service.capping_server - line 175 - Function Cap:
+2023-09-07 13:21:56,261 - INFO - stoxx_capping_service.capping_server - line 74 - Function __cap:
+2023-09-07 13:21:56,262 - INFO - stoxx_capping_service.capping_server - line 78 - methodology: Methodology_Fixed
+2023-09-07 13:21:56,262 - INFO - stoxx_capping_service.capping_server - line 79 - Running Iteration 1: 
+2023-09-07 13:21:56,264 - INFO - stoxx_capping_service.capping_server - line 110 - Iteration 1 Grouped Mcaps : 
+
+ |   mcap |   c1 |   ConstituentId |
+|-------:|-----:|----------------:|
+|     12 |    1 |               1 |
+|     11 |    2 |               2 |
+|     10 |    3 |               3 |
+|      9 |    4 |               4 |
+|      7 |    5 |               5 |
+|      5 |    6 |               6 |
+|      5 |    7 |               7 |
+|      5 |    8 |               8 |
+|      5 |    9 |               9 |
+|      4 |   10 |              10 |
+|      4 |   11 |              11 |
+|      4 |   12 |              12 |
+|      4 |   13 |              13 |
+|      3 |   14 |              14 |
+|      3 |   15 |              15 |
+|      3 |   16 |              16 |
+|      3 |   17 |              17 |
+|      3 |   18 |              18 |
+2023-09-07 13:21:56,272 - INFO - stoxx_capping_service.capping_server - line 117 - Iteration 1 Limit 0.1: 
+2023-09-07 13:21:56,272 - INFO - capping_Core - line 34 - Function cap_component:
+2023-09-07 13:21:56,279 - INFO - stoxx_capping_service.capping_server - line 159 - result after Iteration 1 : 
+
+ |   mcap |   c1 |   ConstituentId |   c1_factor |   factor |
+|-------:|-----:|----------------:|------------:|---------:|
+|     12 |    1 |               1 |    0.833333 | 0.833333 |
+|     11 |    2 |               2 |    0.909091 | 0.909091 |
+|     10 |    3 |               3 |    1        | 1        |
+|      9 |    4 |               4 |    1.04478  | 1.04478  |
+|      7 |    5 |               5 |    1.04478  | 1.04478  |
+|      5 |    6 |               6 |    1.04478  | 1.04478  |
+|      5 |    7 |               7 |    1.04478  | 1.04478  |
+|      5 |    8 |               8 |    1.04478  | 1.04478  |
+|      5 |    9 |               9 |    1.04478  | 1.04478  |
+|      4 |   10 |              10 |    1.04478  | 1.04478  |
+|      4 |   11 |              11 |    1.04478  | 1.04478  |
+|      4 |   12 |              12 |    1.04478  | 1.04478  |
+|      4 |   13 |              13 |    1.04478  | 1.04478  |
+|      3 |   14 |              14 |    1.04478  | 1.04478  |
+|      3 |   15 |              15 |    1.04478  | 1.04478  |
+|      3 |   16 |              16 |    1.04478  | 1.04478  |
+|      3 |   17 |              17 |    1.04478  | 1.04478  |
+|      3 |   18 |              18 |    1.04478  | 1.04478  |
