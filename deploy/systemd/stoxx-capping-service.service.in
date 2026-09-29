@@ -1,0 +1,26 @@
+[Unit]
+Description=STOXX Capping gRPC service
+After=network.target
+
+[Service]
+Type=exec
+WorkingDirectory=@RUNTIME_DIR@
+Environment=PYTHONPATH=@SOURCE_DIR@:@PACKAGE_DIR@
+Environment=STOXX_CAPPING_BIND_ADDRESS=127.0.0.1:50051
+ExecStart=@PYTHON@ -m stoxx_capping_service.capping_server
+Restart=on-failure
+RestartSec=2s
+TimeoutStopSec=15s
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+ReadWritePaths=@RUNTIME_DIR@
+
+[Install]
+WantedBy=default.target
