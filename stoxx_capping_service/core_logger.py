@@ -1,5 +1,6 @@
 import logging
 import sys
+from pathlib import Path
 from logging.handlers import TimedRotatingFileHandler
 
 
@@ -12,6 +13,7 @@ def get_console_handler(formatter=False):
 
 
 def get_file_handler(log_file, formatter=False):
+    Path(log_file).parent.mkdir(parents=True, exist_ok=True)
     file_handler = TimedRotatingFileHandler(log_file, when='midnight')
     if formatter:
         formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - line %(lineno)s - %(message)s")

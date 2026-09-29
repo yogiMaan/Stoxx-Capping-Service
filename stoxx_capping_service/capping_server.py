@@ -1,16 +1,18 @@
-"""Python implementation of the index capping"""
+"""Python implementation of the index capping."""
 
-import capping_pb2
-from stoxx_capping_service import capping_pb2_grpc
-import capping_Core as Core
-import capping_ladder as ladder
-import capping_exposure as exposure
-from concurrent import futures
-from core_logger import get_logger
-import pandas as pd
-import grpc
 import sys
-import os
+from concurrent import futures
+
+import grpc
+import pandas as pd
+
+from . import capping_Core as Core
+from . import capping_exposure as exposure
+from . import capping_ladder as ladder
+from . import capping_pb2
+from . import capping_pb2_grpc
+from .core_logger import get_logger
+from .runtime import grpc_bind_address
 
 logger = get_logger(__name__, "logs/debug.log", use_formatter=True)
 df_logger = get_logger(str(__name__) + "_dfs", "logs/debug.log", use_formatter=False)
@@ -217,7 +219,9 @@ class CappingServicer(capping_pb2_grpc.CappingServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     capping_pb2_grpc.add_CappingServicer_to_server(CappingServicer(), server)
-    server.add_insecure_port("[::]:50051")
+    bind_address = grpc_bind_address()
+    if server.add_insecure_port(bind_address) == 0:
+        raise RuntimeError("Could not bind Stoxx Capping Service to the configured loopback address")
     server.start()
     server.wait_for_termination()
 
